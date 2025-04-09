@@ -3,3 +3,9 @@ vault*/*
 !.gitempty
 !*.sample.json
 *.log
+.idea
+**/bin
+**/obj
+.DS_Store
+data
+*.user
