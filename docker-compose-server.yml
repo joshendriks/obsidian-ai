@@ -1,6 +1,6 @@
 services:
   livesync:
-    build: ../
+    image: ghcr.io/joshendriks/live-sync:main
     volumes:
       - /home/sr/data/notes/live-sync/data:/app/data
       - /home/sr/data/notes/live-sync/dat:/app/dat
