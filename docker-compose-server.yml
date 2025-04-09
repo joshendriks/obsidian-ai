@@ -1,0 +1,19 @@
+services:
+  livesync:
+    build: ../
+    volumes:
+      - /home/sr/data/notes/live-sync/data:/app/data
+      - /home/sr/data/notes/live-sync/dat:/app/dat
+      - /home/sr/data/notes/live-sync/script:/app/script
+    restart: unless-stopped
+    depends_on:
+      - redis
+  redis:
+    image: redis:7.4.2
+    volumes:
+      - ./config:/usr/local/etc/redis:rw
+      - /home/sr/data/notes/redis:/data
+    ports:
+      - '6381:6379'
+    command: redis-server /usr/local/etc/redis/redis-server.conf
+    restart: unless-stopped

@@ -1,8 +1,8 @@
-version: "2.1"
 services:
   bridge:
     build: .
     volumes:
       - ./data:/app/data
       - ./dat:/app/dat
+      - ./script:/app/script
     restart: unless-stopped
