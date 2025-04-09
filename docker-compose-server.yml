@@ -11,7 +11,7 @@ services:
   redis:
     image: redis:7.4.2
     volumes:
-      - ./config:/usr/local/etc/redis:rw
+      - ./redis/config:/usr/local/etc/redis:rw
       - /home/sr/data/notes/redis:/data
     ports:
       - '6381:6379'
