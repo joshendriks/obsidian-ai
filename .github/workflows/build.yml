@@ -16,9 +16,11 @@ jobs:
       matrix:
         include:
           - dockerfile: ./Dockerfile
+            type: dockerfile
             image: ghcr.io/joshendriks/live-sync
-#          - dockerfile: ./src/Dockerfile-dril4net-distribution
-#            image: ghcr.io/username/image2
+          - dockerfile: ./Dockerfile
+            type: dotnet
+            image: ghcr.io/joshendriks/image2
     permissions:
       contents: read
       packages: write
@@ -43,7 +45,8 @@ jobs:
         with:
           images: ${{ matrix.image }}
 
-      - name: Build and push Docker image Drill4Net.Agent.Service
+      - name: Build and push live-sync
+        if: ${{ matrix.type == 'dockerfile' }}
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
@@ -52,3 +55,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Build and push ai-service
+        if: ${{ matrix.type == 'dotnet' }}
+        run: |
+          echo 'dotnet'
+          echo '${{ steps.meta.outputs.tags }}'
+          echo '${{ steps.meta.outputs.labels }}'
