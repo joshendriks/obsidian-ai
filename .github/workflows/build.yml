@@ -55,9 +55,14 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Setup .NET
+        if: ${{ matrix.type == 'dotnet' }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
       - name: Build and push ai-service
         if: ${{ matrix.type == 'dotnet' }}
         run: |
-          echo 'dotnet'
-          echo '${{ steps.meta.outputs.tags }}'
-          echo '${{ steps.meta.outputs.labels }}'
+          cd processor/obsidian-ai
+          dotnet publish --os linux --arch x64 -c Release -p PublishProfile=DefaultContainer -p ContainerRegistry=${{ env.REGISTRY }} -p ContainerRepository=${{ matrix.image }} -p ContainerImageTag=latest
