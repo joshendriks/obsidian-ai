@@ -28,6 +28,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+        builder.Services.AddQueuing(builder.Configuration);
 
 app.MapGet("/fullscan/{*filePath}", async (
         [FromRoute] string filePath,
